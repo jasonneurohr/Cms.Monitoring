@@ -2,7 +2,7 @@
 
 Cms.Monitoring is a .Net Core solution consisting of two projects:
 
-- **Cms.Monitoring.Agent** is a console application which communicates with the Cisco Meeting Server API to retrieve the *mediaProcessingLoad* value and writes the response data to a SQLite database. 
+- **Cms.Monitoring.Agent** is a console application which communicates with the Cisco Meeting Server API to retrieve the *mediaProcessingLoad*, call, alarm, and database status data and writes it to a SQLite database. 
 - **Cms.Monitoring.Web** is a ASP.NET Core application which represents the data saved by the Agent using [Chart.js](https://www.chartjs.org/) to display the data in a graph.
 
 # Installation
@@ -61,9 +61,13 @@ Refer to [Host and deploy ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/
 
 # Usage
 
-Once the installation has been completed successfully simply browse to the web interface at the location it was deployed to, and using the drop down box in the top right select the Cisco Meeting Server to display a graph of the media processing load for the last seven days.
+Once the installation has been completed successfully, simply browse to the web interface at the location it was deployed to, and using the drop down box in the top right select the Cisco Meeting Server to display statistics for the last seven days.
 
 ![](docs/img/web_view_001.png)
+
+![](docs/img/web_view_002.png)
+
+![](docs/img/web_view_003.png)
 
 # License
 
