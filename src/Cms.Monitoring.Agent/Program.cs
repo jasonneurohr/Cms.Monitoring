@@ -33,12 +33,34 @@ namespace Cms.Monitoring.Agent
             {
                 ICmsServer cmsServer = new CmsServer(cms.Address, cms.Port, cms.Username, cms.Password);
                 var load = cmsServer.MediaLoad.Get().Result;
+                var systemStatus = cmsServer.SystemStatus.Get().Result;
+
+                var timestamp = (int)DateTimeOffset.Now.ToUnixTimeSeconds();
 
                 sqliteServices.Add(new MediaLoadStatisticModel
                 {
                     CmsId = cms.Address,
-                    Timestamp = (int)DateTimeOffset.Now.ToUnixTimeSeconds(),
+                    Timestamp = timestamp,
                     MediaProcessingLoad = load
+                });
+
+                sqliteServices.Add(new BandwidthStatisticsModel
+                {
+                    CmsId = cms.Address,
+                    Timestamp = timestamp,
+                    AudioBitRateIncoming = systemStatus.AudioBitRateIncoming,
+                    AudioBitRateOutgoing = systemStatus.AudioBitRateOutgoing,
+                    VideoBitRateIncoming = systemStatus.VideoBitRateIncoming,
+                    VideoBitRateOutgoing = systemStatus.VideoBitRateOutgoing
+                });
+
+                sqliteServices.Add(new CallStatisticsModel
+                {
+                    CmsId = cms.Address,
+                    Timestamp = timestamp,
+                    CallLegsActive = systemStatus.CallLegsActive,
+                    CallLegsCompleted = systemStatus.CallLegsCompleted,
+                    CallLegsMaxActive = systemStatus.CallLegsMaxActive
                 });
             }
         }

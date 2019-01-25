@@ -1,4 +1,4 @@
-﻿using Cms.Monitoring.Web.Models;
+﻿using Cms.Monitoring.Web.Data;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,10 +19,8 @@ namespace Cms.Monitoring.Web
         {
             int lastSevenDays = (int)DateTimeOffset.Now.Subtract(new TimeSpan(7, 0, 0, 0)).ToUnixTimeSeconds();
             var x =_context.MediaLoadStatistics
-                //.Where(i => i.CmsId.Contains(key) && DateTime.SpecifyKind(i.Timestamp, DateTimeKind.Utc) >= lastSevenDays).ToList();
-            .Where(i => i.CmsId.Contains(key) && i.Timestamp >= lastSevenDays).ToList();
+                .Where(i => i.CmsId.Contains(key) && i.Timestamp >= lastSevenDays).ToList();
 
-            // DateTime.ParseExact(this.Text, "dd/MM/yyyy", null);
 
             return _context.MediaLoadStatistics.ToList();
         }
@@ -30,9 +28,6 @@ namespace Cms.Monitoring.Web
         public string GetTimeStamps(string key)
         {
             int lastSevenDays = (int)DateTimeOffset.Now.Subtract(new TimeSpan(7, 0, 0, 0)).ToUnixTimeSeconds();
-            //return JsonConvert.SerializeObject(
-            //    _context.MediaLoadStatistics.Where(
-            //        i => i.CmsId.Contains(key)).Select(c => c.Timestamp).ToList()).ToString();
 
             List<int> x = _context.MediaLoadStatistics
                 .Where(i => i.CmsId.Contains(key) && i.Timestamp >= lastSevenDays)
@@ -73,7 +68,60 @@ namespace Cms.Monitoring.Web
                 .Select(c => c.CmsId)
                 .Distinct()
                 .ToList();
-            //return _context.MediaLoadStatistics.Select(c => c.MediaProcessingLoad).ToList();
+        }
+
+        public ICollection<BandwidthStatistics> GetBandwidthStatistics()
+        {
+            int lastSevenDays = (int)DateTimeOffset.Now.Subtract(new TimeSpan(7, 0, 0, 0)).ToUnixTimeSeconds();
+            return _context.BandwidthStatistics
+                .Where(i => i.Timestamp >= lastSevenDays)
+                .Distinct()
+                .ToList();
+        }
+
+        public ICollection<BandwidthStatistics> GetBandwidthStatistics(string cmsId)
+        {
+            int lastSevenDays = (int)DateTimeOffset.Now.Subtract(new TimeSpan(7, 0, 0, 0)).ToUnixTimeSeconds();
+            return _context.BandwidthStatistics
+                .Where(i => i.Timestamp >= lastSevenDays && i.CmsId == cmsId)
+                .Distinct()
+                .ToList();
+        }
+
+        public ICollection<CallStatistics> GetCallStatistics()
+        {
+            int lastSevenDays = (int)DateTimeOffset.Now.Subtract(new TimeSpan(7, 0, 0, 0)).ToUnixTimeSeconds();
+            return _context.CallStatistics
+                .Where(i => i.Timestamp >= lastSevenDays)
+                .Distinct()
+                .ToList();
+        }
+
+        public ICollection<CallStatistics> GetCallStatistics(string cmsId)
+        {
+            int lastSevenDays = (int)DateTimeOffset.Now.Subtract(new TimeSpan(7, 0, 0, 0)).ToUnixTimeSeconds();
+            return _context.CallStatistics
+                .Where(i => i.Timestamp >= lastSevenDays && i.CmsId == cmsId)
+                .Distinct()
+                .ToList();
+        }
+
+        public ICollection<MediaLoadStatisticModel> GetMediaLoadStatistics()
+        {
+            int lastSevenDays = (int)DateTimeOffset.Now.Subtract(new TimeSpan(7, 0, 0, 0)).ToUnixTimeSeconds();
+            return _context.MediaLoadStatistics
+                .Where(i => i.Timestamp >= lastSevenDays)
+                .Distinct()
+                .ToList();
+        }
+
+        public ICollection<MediaLoadStatisticModel> GetMediaLoadStatistics(string cmsId)
+        {
+            int lastSevenDays = (int)DateTimeOffset.Now.Subtract(new TimeSpan(7, 0, 0, 0)).ToUnixTimeSeconds();
+            return _context.MediaLoadStatistics
+                .Where(i => i.Timestamp >= lastSevenDays && i.CmsId == cmsId)
+                .Distinct()
+                .ToList();
         }
     }
 }

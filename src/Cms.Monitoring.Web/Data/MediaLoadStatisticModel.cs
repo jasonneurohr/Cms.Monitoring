@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Cms.Monitoring.Web.Models
+namespace Cms.Monitoring.Web.Data
 {
     public class MediaLoadStatisticModel
     {
