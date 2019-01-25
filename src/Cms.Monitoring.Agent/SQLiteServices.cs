@@ -11,5 +11,17 @@ namespace Cms.Monitoring.Agent
             _context.Add(m);
             return _context.SaveChanges();
         }
+
+        public int Add(BandwidthStatisticsModel b)
+        {
+            _context.Add(b);
+            return _context.SaveChanges();
+        }
+
+        public int Add(CallStatisticsModel c)
+        {
+            _context.Add(c);
+            return _context.SaveChanges();
+        }
     }
 }

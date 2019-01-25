@@ -16,17 +16,13 @@ namespace Cms.Monitoring.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(new CmsIdViewModel(_service));
+            return View(new StatisticsViewModel(_service));
         }
 
         [HttpPost]
         public IActionResult Index(CmsIdViewModel cmsIdViewModel)
         {
-            _service.GetRecords(cmsIdViewModel.SelectedCmsId);
-            ViewData["timestamps"] = _service.GetTimeStamps(cmsIdViewModel.SelectedCmsId);
-            ViewData["loadpoints"] = _service.GetLoadPoints(cmsIdViewModel.SelectedCmsId);
-
-            return View(new CmsIdViewModel(_service));
+            return View(new StatisticsViewModel(_service, cmsIdViewModel.SelectedCmsId));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
