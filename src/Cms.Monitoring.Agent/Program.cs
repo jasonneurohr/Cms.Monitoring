@@ -35,19 +35,21 @@ namespace Cms.Monitoring.Agent
                 var load = cmsServer.MediaLoad.Get().Result;
                 var systemStatus = cmsServer.SystemStatus.Get().Result;
 
-                var timestamp = (int)DateTimeOffset.Now.ToUnixTimeSeconds();
+                // Round off the seconds
+                DateTimeOffset timestamp = DateTimeOffset.Now;
+                int roundedTimestamp = (int)timestamp.AddSeconds(-timestamp.Second).ToUnixTimeSeconds(); ;
 
                 sqliteServices.Add(new MediaLoadStatisticModel
                 {
                     CmsId = cms.Address,
-                    Timestamp = timestamp,
+                    Timestamp = roundedTimestamp,
                     MediaProcessingLoad = load
                 });
 
                 sqliteServices.Add(new BandwidthStatisticsModel
                 {
                     CmsId = cms.Address,
-                    Timestamp = timestamp,
+                    Timestamp = roundedTimestamp,
                     AudioBitRateIncoming = systemStatus.AudioBitRateIncoming,
                     AudioBitRateOutgoing = systemStatus.AudioBitRateOutgoing,
                     VideoBitRateIncoming = systemStatus.VideoBitRateIncoming,
@@ -57,7 +59,7 @@ namespace Cms.Monitoring.Agent
                 sqliteServices.Add(new CallStatisticsModel
                 {
                     CmsId = cms.Address,
-                    Timestamp = timestamp,
+                    Timestamp = roundedTimestamp,
                     CallLegsActive = systemStatus.CallLegsActive,
                     CallLegsCompleted = systemStatus.CallLegsCompleted,
                     CallLegsMaxActive = systemStatus.CallLegsMaxActive
