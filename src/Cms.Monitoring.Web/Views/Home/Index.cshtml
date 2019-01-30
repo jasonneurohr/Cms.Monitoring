@@ -48,7 +48,7 @@
             data: {
                 labels: @Html.Raw(Json.Serialize(Model.BandwidthStatisticsRecords.Select(i => i.Timestamp))),
                 datasets: [{
-                    label: 'Incoming Audio Bitrate',
+                    label: 'Incoming Audio (kbps)',
                     fill: false,
                     data: @Html.Raw(Json.Serialize(Model.BandwidthStatisticsRecords.Select(i => i.AudioBitRateIncoming))),
                     backgroundColor: [
@@ -60,7 +60,7 @@
                     borderWidth: 1
                 },
                 {
-                    label: 'Outgoing Audio Bitrate',
+                    label: 'Outgoing Audio (kbps)',
                     fill: false,
                     data: @Html.Raw(Json.Serialize(Model.BandwidthStatisticsRecords.Select(i => i.AudioBitRateOutgoing))),
                     backgroundColor: [
@@ -72,7 +72,7 @@
                     borderWidth: 1
                     },
                 {
-                    label: 'Incoming Video Bitrate',
+                    label: 'Incoming Video (kbps)',
                     fill: false,
                     data: @Html.Raw(Json.Serialize(Model.BandwidthStatisticsRecords.Select(i => i.VideoBitRateIncoming))),
                     backgroundColor: [
@@ -84,7 +84,7 @@
                     borderWidth: 1
                     },
                 {
-                    label: 'Outgoing Video Bitrate',
+                    label: 'Outgoing Video (kbps)',
                     fill: false,
                     data: @Html.Raw(Json.Serialize(Model.BandwidthStatisticsRecords.Select(i => i.VideoBitRateOutgoing))),
                     backgroundColor: [
@@ -96,7 +96,7 @@
                     borderWidth: 1
                 },
                 {
-                    label: 'Total Outgoing Bitrate',
+                    label: 'Total Outgoing (kbps)',
                     fill: false,
                     data: @Html.Raw(Json.Serialize(Model.BandwidthStatisticsRecords.Select(i => i.TotalOugoingBitrate))),
                     backgroundColor: [
@@ -108,7 +108,7 @@
                     borderWidth: 1
                 },
                 {
-                    label: 'Total Incoming Bitrate',
+                    label: 'Total Incoming (kbps)',
                     fill: false,
                     data: @Html.Raw(Json.Serialize(Model.BandwidthStatisticsRecords.Select(i => i.TotalIncomingBitrate))),
                     backgroundColor: [
