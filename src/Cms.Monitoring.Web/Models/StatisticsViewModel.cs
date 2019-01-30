@@ -72,12 +72,12 @@ namespace Cms.Monitoring.Web.Models
                 {
                     CmsId = rec.CmsId,
                     Timestamp = DateTimeOffset.FromUnixTimeSeconds(rec.Timestamp).ToLocalTime().ToString(),
-                    AudioBitRateIncoming = rec.AudioBitRateIncoming,
-                    AudioBitRateOutgoing = rec.AudioBitRateOutgoing,
-                    VideoBitRateIncoming = rec.VideoBitRateIncoming,
-                    VideoBitRateOutgoing = rec.VideoBitRateOutgoing,
-                    TotalIncomingBitrate = rec.AudioBitRateIncoming + rec.VideoBitRateIncoming,
-                    TotalOugoingBitrate = rec.AudioBitRateOutgoing + rec.VideoBitRateOutgoing
+                    AudioBitRateIncoming = (int)(rec.AudioBitRateIncoming * 0.001),
+                    AudioBitRateOutgoing = (int)(rec.AudioBitRateOutgoing * 0.001),
+                    VideoBitRateIncoming = (int)(rec.VideoBitRateIncoming * 0.001),
+                    VideoBitRateOutgoing = (int)(rec.VideoBitRateOutgoing * 0.001),
+                    TotalIncomingBitrate = (int)((rec.AudioBitRateIncoming + rec.VideoBitRateIncoming) * 0.001),
+                    TotalOugoingBitrate = (int)((rec.AudioBitRateOutgoing + rec.VideoBitRateOutgoing) * 0.001)
                 });
             }
 
