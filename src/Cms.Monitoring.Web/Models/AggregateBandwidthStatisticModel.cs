@@ -1,9 +1,8 @@
 ﻿namespace Cms.Monitoring.Web.Models
 {
-    public class BandwidthStatisticsModel
+    public class AggregateBandwidthStatisticModel
     {
-        public string CmsId { get; set; }
-        public string Timestamp { get; set; }
+        public int Timestamp { get; set; }
         public int AudioBitRateOutgoing { get; set; }
         public int AudioBitRateIncoming { get; set; }
         public int VideoBitRateOutgoing { get; set; }

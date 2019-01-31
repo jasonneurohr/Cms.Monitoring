@@ -1,70 +1,45 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Cms.Monitoring.Web.Data;
+using Cms.Monitoring.Web.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 
-namespace Cms.Monitoring.Web.Models
+namespace Cms.Monitoring.Web.ViewModels
 {
     public class StatisticsViewModel
     {
         private readonly DbService _service;
-        public IEnumerable<SelectListItem> selectListItems;
+        private readonly IOptions<AppConfiguration> _config;
         public List<BandwidthStatisticsModel> BandwidthStatisticsRecords;
-        //public BandwidthStatisticsModel BandwidthStatistics;
         public List<CallStatisticsModel> CallStatisticsRecords;
         public List<MediaLoadStatisticsModel> MediaLoadStatisticsRecords;
 
-        // Hold the ID selected in the form
-        public string SelectedCmsId { get; set; }
-
-        public StatisticsViewModel(DbService service)
+        public StatisticsViewModel(DbService service, string cmsId, IOptions<AppConfiguration> config)
         {
             _service = service;
-            selectListItems = new SelectList(_service.GetCmsIds());
+            _config = config;
+
             BandwidthStatisticsRecords = new List<BandwidthStatisticsModel>();
             CallStatisticsRecords = new List<CallStatisticsModel>();
             MediaLoadStatisticsRecords = new List<MediaLoadStatisticsModel>();
 
-            
-            BandwidthStatisticsRecords.Add(new BandwidthStatisticsModel
-            {
-                CmsId = "0",
-                Timestamp = "0",
-                AudioBitRateIncoming = 0,
-                AudioBitRateOutgoing = 0,
-                VideoBitRateIncoming = 0,
-                VideoBitRateOutgoing = 0,
-                TotalIncomingBitrate = 0,
-                TotalOugoingBitrate = 0
-            });
+            ICollection<BandwidthStatistics> bandwidthStatistics;
+            ICollection<CallStatistics> callStatistics;
+            ICollection<MediaLoadStatisticModel> mediaLoadStatistics;
 
-            CallStatisticsRecords.Add(new CallStatisticsModel
+            if (_config.Value.IgnoreZeroDataPoints)
             {
-                CmsId = "0",
-                Timestamp = "0",
-                CallLegsActive = 0,
-                CallLegsCompleted = 0,
-                CallLegsMaxActive = 0
-            });
-            
-            MediaLoadStatisticsRecords.Add(new MediaLoadStatisticsModel
+                bandwidthStatistics = _service.GetBandwidthStatistics(cmsId, true);
+                callStatistics = _service.GetCallStatistics(cmsId, true);
+                mediaLoadStatistics = _service.GetMediaLoadStatistics(cmsId, true);
+            }
+            else
             {
-                CmsId = "0",
-                Timestamp = "0",
-                MediaProcessingLoad = 0
-            });
-        }
-
-        public StatisticsViewModel(DbService service, string cmsId)
-        {
-            _service = service;
-            selectListItems = new SelectList(_service.GetCmsIds());
-            BandwidthStatisticsRecords = new List<BandwidthStatisticsModel>();
-            CallStatisticsRecords = new List<CallStatisticsModel>();
-            MediaLoadStatisticsRecords = new List<MediaLoadStatisticsModel>();
-            
-            var bandwidthStatistics = _service.GetBandwidthStatistics(cmsId);
-            var callStatistics = _service.GetCallStatistics(cmsId);
-            var mediaLoadStatistics = _service.GetMediaLoadStatistics(cmsId);
+                bandwidthStatistics = _service.GetBandwidthStatistics(cmsId, false);
+                callStatistics = _service.GetCallStatistics(cmsId, false);
+                mediaLoadStatistics = _service.GetMediaLoadStatistics(cmsId, false);
+            }
 
             foreach (var rec in bandwidthStatistics)
             {

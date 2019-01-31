@@ -36,6 +36,8 @@ namespace Cms.Monitoring.Web
             
             // Register the DBService
             services.AddScoped<DbService>();
+
+            services.Configure<AppConfiguration>(Configuration.GetSection("GraphSettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

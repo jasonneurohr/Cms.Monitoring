@@ -4,22 +4,24 @@
 }
 
 <div>
-    <canvas id="mediaChart" width="1400" height="600"></canvas>
-    <canvas id="bandwidthChart" width="1400" height="600"></canvas>
-    <canvas id="callChart" width="1400" height="600"></canvas>
-    <script>
-        var mediaCtx = document.getElementById("mediaChart").getContext('2d');
-        var bandwidthCtx = document.getElementById("bandwidthChart").getContext('2d');
-        var callCtx = document.getElementById("callChart").getContext('2d');
+    <canvas id="aggMediaChart" width="1400" height="600"></canvas>
+    <canvas id="aggBandwidthChart" width="1400" height="600"></canvas>
+    <canvas id="aggCallChart" width="1400" height="600"></canvas>
 
-        var myChart = new Chart(mediaCtx, {
+    <script>
+        var aggMediaCtx = document.getElementById("aggMediaChart").getContext('2d');
+        var aggBandwidthCtx = document.getElementById("aggBandwidthChart").getContext('2d');
+        var aggCallCtx = document.getElementById("aggCallChart").getContext('2d');
+
+
+        var aggMediaLoadChart = new Chart(aggMediaCtx, {
             type: 'line',
             data: {
-                labels: @Html.Raw(Json.Serialize(Model.StatisticsViewModel.MediaLoadStatisticsRecords.Select(i => i.Timestamp))),
+                labels: @Html.Raw(Json.Serialize(Model.AggregateStatisticsViewModel.AggregateMediaLoadStatisticsRecords.Select(i => i.Timestamp))),
                 datasets: [{
                     label: 'Media Process Load',
                     fill: false,
-                    data: @Html.Raw(Json.Serialize(Model.StatisticsViewModel.MediaLoadStatisticsRecords.Select(i => i.MediaProcessingLoad))),
+                    data: @Html.Raw(Json.Serialize(Model.AggregateStatisticsViewModel.AggregateMediaLoadStatisticsRecords.Select(i => i.MediaProcessingLoad))),
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.2)',
                     ],
@@ -44,14 +46,15 @@
                 }
             }
         });
-        var bandwidthChart = new Chart(bandwidthCtx, {
+
+        var aggBandwidthChart = new Chart(aggBandwidthCtx, {
              type: 'line',
             data: {
-                labels: @Html.Raw(Json.Serialize(Model.StatisticsViewModel.BandwidthStatisticsRecords.Select(i => i.Timestamp))),
+                labels: @Html.Raw(Json.Serialize(Model.AggregateStatisticsViewModel.AggregateBandwidthStatisticsRecords.Select(i => i.Timestamp))),
                 datasets: [{
                     label: 'Incoming Audio (kbps)',
                     fill: false,
-                    data: @Html.Raw(Json.Serialize(Model.StatisticsViewModel.BandwidthStatisticsRecords.Select(i => i.AudioBitRateIncoming))),
+                    data: @Html.Raw(Json.Serialize(Model.AggregateStatisticsViewModel.AggregateBandwidthStatisticsRecords.Select(i => i.AudioBitRateIncoming))),
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.2)',
                     ],
@@ -63,7 +66,7 @@
                 {
                     label: 'Outgoing Audio (kbps)',
                     fill: false,
-                    data: @Html.Raw(Json.Serialize(Model.StatisticsViewModel.BandwidthStatisticsRecords.Select(i => i.AudioBitRateOutgoing))),
+                    data: @Html.Raw(Json.Serialize(Model.AggregateStatisticsViewModel.AggregateBandwidthStatisticsRecords.Select(i => i.AudioBitRateOutgoing))),
                     backgroundColor: [
                         'rgba(255, 206, 86, 0.2)',
                     ],
@@ -75,7 +78,7 @@
                 {
                     label: 'Incoming Video (kbps)',
                     fill: false,
-                    data: @Html.Raw(Json.Serialize(Model.StatisticsViewModel.BandwidthStatisticsRecords.Select(i => i.VideoBitRateIncoming))),
+                    data: @Html.Raw(Json.Serialize(Model.AggregateStatisticsViewModel.AggregateBandwidthStatisticsRecords.Select(i => i.VideoBitRateIncoming))),
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.2)',
                     ],
@@ -87,7 +90,7 @@
                 {
                     label: 'Outgoing Video (kbps)',
                     fill: false,
-                    data: @Html.Raw(Json.Serialize(Model.StatisticsViewModel.BandwidthStatisticsRecords.Select(i => i.VideoBitRateOutgoing))),
+                    data: @Html.Raw(Json.Serialize(Model.AggregateStatisticsViewModel.AggregateBandwidthStatisticsRecords.Select(i => i.VideoBitRateOutgoing))),
                     backgroundColor: [
                         'rgba(153, 102, 255, 0.2)',
                     ],
@@ -99,7 +102,7 @@
                 {
                     label: 'Total Outgoing (kbps)',
                     fill: false,
-                    data: @Html.Raw(Json.Serialize(Model.StatisticsViewModel.BandwidthStatisticsRecords.Select(i => i.TotalOugoingBitrate))),
+                    data: @Html.Raw(Json.Serialize(Model.AggregateStatisticsViewModel.AggregateBandwidthStatisticsRecords.Select(i => i.TotalOugoingBitrate))),
                     backgroundColor: [
                         'rgba(255, 171, 145, 1.0)',
                     ],
@@ -111,7 +114,7 @@
                 {
                     label: 'Total Incoming (kbps)',
                     fill: false,
-                    data: @Html.Raw(Json.Serialize(Model.StatisticsViewModel.BandwidthStatisticsRecords.Select(i => i.TotalIncomingBitrate))),
+                    data: @Html.Raw(Json.Serialize(Model.AggregateStatisticsViewModel.AggregateBandwidthStatisticsRecords.Select(i => i.TotalIncomingBitrate))),
                     backgroundColor: [
                         'rgba(144, 202, 249, 1.0)',
                     ],
@@ -136,15 +139,16 @@
                 }
             }
         });
-        var callChart = new Chart(callCtx, {
+
+        var aggCallChart = new Chart(aggCallCtx, {
             type: 'line',
             fill: false,
             data: {
-                labels: @Html.Raw(Json.Serialize(Model.StatisticsViewModel.CallStatisticsRecords.Select(i => i.Timestamp))),
+                labels: @Html.Raw(Json.Serialize(Model.AggregateStatisticsViewModel.AggregateCallStatisticsRecords.Select(i => i.Timestamp))),
                 datasets: [{
                     label: 'Active Call Legs',
                     fill: false,
-                    data: @Html.Raw(Json.Serialize(Model.StatisticsViewModel.CallStatisticsRecords.Select(i => i.CallLegsActive))),
+                    data: @Html.Raw(Json.Serialize(Model.AggregateStatisticsViewModel.AggregateCallStatisticsRecords.Select(i => i.CallLegsActive))),
                     backgroundColor: [
                         'rgba(255, 159, 64, 0.2)'
                     ],
