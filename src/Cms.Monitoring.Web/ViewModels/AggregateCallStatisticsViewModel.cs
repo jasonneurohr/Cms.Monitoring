@@ -1,8 +1,7 @@
-﻿namespace Cms.Monitoring.Web.Models
+﻿namespace Cms.Monitoring.Web.ViewModels
 {
-    public class CallStatisticsModel
+    public class AggregateCallStatisticsViewModel
     {
-        public string CmsId { get; set; }
         public string Timestamp { get; set; }
         public int CallLegsActive { get; set; }
         public int CallLegsMaxActive { get; set; }

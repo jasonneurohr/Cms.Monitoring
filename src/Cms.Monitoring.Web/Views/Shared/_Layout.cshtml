@@ -1,4 +1,4 @@
-﻿@model StatisticsViewModel
+﻿@model GlobalViewModel
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +27,7 @@
         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" id="navbarSupportedContent">
             <form class="form-inline my-2 my-lg-0" asp-action="Index" asp-controller="Home">
                 <label>Select CMS Server</label>
-                <select asp-for="SelectedCmsId" asp-items="Model.selectListItems">
+                <select asp-for="CmsIdViewModel.CmsId" asp-items="Model.NavViewModel.CmsIdList">
                     <option value="">**Not selected**</option>
                 </select>
                 <button type="submit" class="btn btn-default">Submit</button>
