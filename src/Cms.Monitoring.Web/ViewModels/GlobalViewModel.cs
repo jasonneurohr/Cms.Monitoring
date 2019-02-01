@@ -6,5 +6,6 @@
         public AggregateStatisticsViewModel AggregateStatisticsViewModel { get; set; }
         public NavViewModel NavViewModel { get; set; }
         public CmsIdViewModel CmsIdViewModel { get; set; }
+        public GraphControlsViewModel GraphControlsViewModel { get; set; }
     }
 }

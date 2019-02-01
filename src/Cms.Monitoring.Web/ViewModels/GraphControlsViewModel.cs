@@ -1,8 +1,7 @@
-﻿namespace Cms.Monitoring.Web
+﻿namespace Cms.Monitoring.Web.ViewModels
 {
-    public class AppConfiguration
+    public class GraphControlsViewModel
     {
-        public bool IgnoreZeroDataPoints { get; set; }
         public bool DisplayRecommendedMediaLimit { get; set; }
         public int RecommendedMediaLimitValue { get; set; }
     }

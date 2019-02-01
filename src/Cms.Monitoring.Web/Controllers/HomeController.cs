@@ -35,10 +35,20 @@ namespace Cms.Monitoring.Web.Controllers
             GlobalViewModel globalViewModel = new GlobalViewModel()
             {
                 StatisticsViewModel = new StatisticsViewModel(_service, cmsIdViewModel.CmsId, _config),
-                NavViewModel = new NavViewModel(_service)
+                NavViewModel = new NavViewModel(_service),
+                GraphControlsViewModel = new GraphControlsViewModel()
+                {
+                    DisplayRecommendedMediaLimit = _config.Value.DisplayRecommendedMediaLimit,
+                    RecommendedMediaLimitValue = _config.Value.RecommendedMediaLimitValue
+                }
             };
 
-            return View(globalViewModel);
+            if (_config.Value.DisplayRecommendedMediaLimit)
+            {
+                return View("Index", globalViewModel);
+            }
+
+            return View("IndexNoMediaLimit", globalViewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -46,23 +46,6 @@
                     display: 'true',
                     text: 'Media Processing Load Statistics',
                     fontSize: '18'
-                },
-                annotation: {
-                    annotations: [{
-                        drawTime: 'afterDatasetsDraw',
-                        id: 'threshold',
-                        type: 'line',
-                        mode: 'horizontal',
-                        scaleID: 'y-axis-0',
-                        value: '@Html.Raw(Model.GraphControlsViewModel.RecommendedMediaLimitValue)',
-                        borderColor: 'red',
-                        borderWidth: '5',
-                        label: {
-                            backgroundColor: 'black',
-                            content: 'Recommended Limit',
-                            enabled: 'true'
-                        }
-                    }]
                 }
             }
         });
